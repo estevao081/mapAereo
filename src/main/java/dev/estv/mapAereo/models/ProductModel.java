@@ -2,6 +2,7 @@ package dev.estv.mapAereo.models;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 
@@ -17,17 +18,28 @@ public class ProductModel extends RepresentationModel<ProductModel> implements S
     private static final long serialVersionUID = 1L;
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private Integer codigo;
     private String nome;
     private Integer quantidade;
     private String validade;
+    private String endereco;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
+    }
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public String getNome() {
@@ -52,5 +64,13 @@ public class ProductModel extends RepresentationModel<ProductModel> implements S
 
     public void setValidade(String validade) {
         this.validade = validade;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 }

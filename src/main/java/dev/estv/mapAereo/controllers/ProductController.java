@@ -3,6 +3,8 @@ package dev.estv.mapAereo.controllers;
 import dev.estv.mapAereo.dtos.ProductRecordDto;
 import dev.estv.mapAereo.models.ProductModel;
 import dev.estv.mapAereo.repositories.ProductRepository;
+import dev.estv.mapAereo.services.DateValidationService;
+import dev.estv.mapAereo.services.ProductValidationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -22,6 +23,8 @@ public class ProductController {
 
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    ProductValidationService productValidationService;
 
     @GetMapping("/products")
     public ResponseEntity<List<ProductModel>> getAllProducts() {
@@ -45,9 +48,9 @@ public class ProductController {
             }
         }
         if (productO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
         }
-        productO.get().add(linkTo(methodOn(ProductController.class).getAllProducts()).withRel("Products List"));
+        productO.get().add(linkTo(methodOn(ProductController.class).getAllProducts()).withRel("Lista de produtos"));
         return ResponseEntity.status(HttpStatus.OK).body(productO.get());
     }
 
@@ -55,6 +58,10 @@ public class ProductController {
     public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDto productRecordDto) {
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productRecordDto, productModel);
+        productValidationService.validateCode(productModel.getCodigo());
+        productValidationService.validateName(productModel.getNome());
+        productValidationService.validateDate(productModel.getValidade());
+        productValidationService.validateAddress(productModel.getEndereco());
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
     }
 
@@ -68,10 +75,10 @@ public class ProductController {
             }
         }
         if (productO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
         }
         productRepository.delete(productO.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Product deleted successfully.");
+        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
     }
 
     @PutMapping("/products/{codigo}")
@@ -85,10 +92,14 @@ public class ProductController {
             }
         }
         if (productO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
         }
         var productModel = productO.get();
         BeanUtils.copyProperties(productRecordDto, productModel);
+        productValidationService.validateCode(productModel.getCodigo());
+        productValidationService.validateName(productModel.getNome());
+        productValidationService.validateDate(productModel.getValidade());
+        productValidationService.validateAddress(productModel.getEndereco());
         return ResponseEntity.status(HttpStatus.OK).body(productRepository.save(productModel));
     }
 }

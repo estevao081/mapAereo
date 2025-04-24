@@ -64,7 +64,7 @@ public class ProductController {
         List<ProductModel> productsList = productRepository.findAll();
         Optional<ProductModel> productO = Optional.empty();
         for (ProductModel product : productsList) {
-            if (product.getId().equals(id)) {
+            if (product.getId().toString().contains(id.toString())) {
                 productO = Optional.of(product);
             }
         }

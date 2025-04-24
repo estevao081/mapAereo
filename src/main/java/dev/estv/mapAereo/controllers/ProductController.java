@@ -26,7 +26,7 @@ public class ProductController {
     @Autowired
     ProductValidationService productValidationService;
 
-    @GetMapping("/products")
+    @GetMapping("/api/products")
     public ResponseEntity<List<ProductModel>> getAllProducts() {
         List<ProductModel> productsList = productRepository.findAll();
         if (!productsList.isEmpty()) {
@@ -38,7 +38,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productsList);
     }
 
-    @GetMapping("/products/{codigo}")
+    @GetMapping("/api/products/{codigo}")
     public ResponseEntity<Object> getOneProduct(@PathVariable(value = "codigo") Integer codigo) {
         List<ProductModel> productsList = productRepository.findAll();
         Optional<ProductModel> productO = Optional.empty();
@@ -54,7 +54,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productO.get());
     }
 
-    @PostMapping("/products")
+    @PostMapping("/api/products")
     public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDto productRecordDto) {
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productRecordDto, productModel);
@@ -65,7 +65,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
     }
 
-    @DeleteMapping("/products/{codigo}")
+    @DeleteMapping("/api/products/{codigo}")
     public ResponseEntity<Object> deleteProduct(@PathVariable(value = "codigo") Integer codigo) {
         List<ProductModel> productsList = productRepository.findAll();
         Optional<ProductModel> productO = Optional.empty();
@@ -81,7 +81,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
     }
 
-    @PutMapping("/products/{codigo}")
+    @PutMapping("/api/products/{codigo}")
     public ResponseEntity<Object> updateProduct(@PathVariable(value = "codigo") Integer codigo,
                                                 @RequestBody @Valid ProductRecordDto productRecordDto) {
         List<ProductModel> productsList = productRepository.findAll();

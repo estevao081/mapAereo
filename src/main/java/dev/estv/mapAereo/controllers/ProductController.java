@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -29,28 +30,21 @@ public class ProductController {
     @GetMapping("/api/products")
     public ResponseEntity<List<ProductModel>> getAllProducts() {
         List<ProductModel> productsList = productRepository.findAll();
-        if (!productsList.isEmpty()) {
-            for (ProductModel product : productsList) {
-                Integer codigo = product.getCodigo();
-                product.add(linkTo(methodOn(ProductController.class).getOneProduct(codigo)).withSelfRel());
-            }
-        }
         return ResponseEntity.status(HttpStatus.OK).body(productsList);
     }
 
-    @GetMapping("/api/products/{codigo}")
-    public ResponseEntity<Object> getOneProduct(@PathVariable(value = "codigo") Integer codigo) {
+    @GetMapping("/api/products/{id}")
+    public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id") UUID id) {
         List<ProductModel> productsList = productRepository.findAll();
         Optional<ProductModel> productO = Optional.empty();
         for (ProductModel product : productsList) {
-            if (product.getCodigo().equals(codigo)) {
+            if (product.getId().equals(id)) {
                 productO = Optional.of(product);
             }
         }
         if (productO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
         }
-        productO.get().add(linkTo(methodOn(ProductController.class).getAllProducts()).withRel("Lista de produtos"));
         return ResponseEntity.status(HttpStatus.OK).body(productO.get());
     }
 
@@ -65,12 +59,12 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
     }
 
-    @DeleteMapping("/api/products/{codigo}")
-    public ResponseEntity<Object> deleteProduct(@PathVariable(value = "codigo") Integer codigo) {
+    @DeleteMapping("/api/products/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") UUID id) {
         List<ProductModel> productsList = productRepository.findAll();
         Optional<ProductModel> productO = Optional.empty();
         for (ProductModel product : productsList) {
-            if (product.getCodigo().equals(codigo)) {
+            if (product.getId().equals(id)) {
                 productO = Optional.of(product);
             }
         }
@@ -81,13 +75,13 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
     }
 
-    @PutMapping("/api/products/{codigo}")
-    public ResponseEntity<Object> updateProduct(@PathVariable(value = "codigo") Integer codigo,
+    @PutMapping("/api/products/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id,
                                                 @RequestBody @Valid ProductRecordDto productRecordDto) {
         List<ProductModel> productsList = productRepository.findAll();
         Optional<ProductModel> productO = Optional.empty();
         for (ProductModel product : productsList) {
-            if (product.getCodigo().equals(codigo)) {
+            if (product.getId().equals(id)) {
                 productO = Optional.of(product);
             }
         }

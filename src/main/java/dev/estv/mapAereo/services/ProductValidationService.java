@@ -20,7 +20,7 @@ public class ProductValidationService {
     }
 
     public void validateName(String name) {
-        if (!name.matches("^[\\p{L}\\s]*$")) {
+        if (!name.matches("^[\\p{L}\\p{N}-]+$")) {
             throw new InvalidNameException();
         }
     }

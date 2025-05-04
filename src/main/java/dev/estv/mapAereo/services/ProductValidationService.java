@@ -1,5 +1,6 @@
 package dev.estv.mapAereo.services;
 
+import dev.estv.mapAereo.dtos.ProductRecordDto;
 import dev.estv.mapAereo.exceptions.InvalidAddressException;
 import dev.estv.mapAereo.exceptions.InvalidCodeException;
 import dev.estv.mapAereo.exceptions.InvalidDateException;
@@ -38,5 +39,10 @@ public class ProductValidationService {
         }
     }
 
-
+    public void validate(ProductRecordDto dto) {
+        validateCode(dto.codigo());
+        validateName(dto.nome());
+        validateDate(dto.validade());
+        validateAddress(dto.endereco());
+    }
 }

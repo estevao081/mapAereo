@@ -6,13 +6,9 @@ import java.util.UUID;
 
 import jakarta.persistence.*;
 
-
-import org.springframework.hateoas.RepresentationModel;
-
-
 @Entity
 @Table(name = "products")
-public class ProductModel extends RepresentationModel<ProductModel> implements Serializable {
+public class ProductModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

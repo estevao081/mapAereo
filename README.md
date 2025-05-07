@@ -11,12 +11,22 @@ A RESTful API built with Spring Boot for managing product inventory and operatio
 
 ## 🚀 Technologies
 
-- Java 19
-- Spring Boot 3.2.5
+- Java 17
+- Spring Boot
+- Spring Web
 - Spring Data JPA
-- Spring Validation
-- H2 Database
-- OpenAPI / Swagger UI
+- H2 Database (dev/test)
+- MySQL (production)
+- Bean Validation (Jakarta Validation)
+- Swagger / OpenAPI 3
+- JUnit 5
+- Mockito
+
+## 📦 Requirements
+
+- Java 17+
+- Maven 3.6+
+- Docker (for deployment with MySQL)
 
 ## 🧪 Running Tests
 

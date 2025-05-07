@@ -16,11 +16,11 @@ public class ProductModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private Integer codigo;
-    private String nome;
-    private Integer quantidade;
-    private String validade;
-    private String endereco;
+    private Integer code;
+    private String name;
+    private Integer quantity;
+    private String expiration;
+    private String address;
 
     public UUID getId() {
         return id;
@@ -30,43 +30,43 @@ public class ProductModel implements Serializable {
         this.id = id;
     }
 
-    public Integer getCodigo() {
-        return codigo;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getQuantidade() {
-        return quantidade;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
-    public String getValidade() {
-        return validade;
+    public String getExpiration() {
+        return expiration;
     }
 
-    public void setValidade(String validade) {
-        this.validade = validade;
+    public void setExpiration(String expiration) {
+        this.expiration = expiration;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getAddress() {
+        return address;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

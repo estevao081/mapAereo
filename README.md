@@ -75,7 +75,7 @@ Custom exceptions are thrown if validations fail.
 1. Clone the repository:
 ```bash
 git clone https://github.com/estevao081/mapAereo.git
-cd mapAereo-api
+cd mapAereo
 ```
 
 2. Build and run the project using Maven:

@@ -8,7 +8,7 @@
         <version>3.2.5</version>
     </parent>
     <groupId>dev.estv</groupId>
-    <artifactId>springboot</artifactId>
+    <artifactId>mapAereo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>mapAereo</name>
     <description>Projeto para auxílio de controle de estoque e operações em loja</description>

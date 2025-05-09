@@ -14,7 +14,7 @@
     <description>Projeto para auxílio de controle de estoque e operações em loja</description>
 
     <properties>
-        <java.version>19</java.version>
+        <java.version>21</java.version>
     </properties>
 
     <dependencies>

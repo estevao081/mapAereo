@@ -36,6 +36,9 @@ public class ProductService {
         validate(dto);
         ProductModel productModel = new ProductModel();
         BeanUtils.copyProperties(dto, productModel);
+        if (dto.expiration() != null && dto.expiration().isBlank()) {
+            productModel.setExpiration(null);
+        }
         return repository.save(productModel);
     }
 
@@ -49,6 +52,9 @@ public class ProductService {
         validate(dto);
         var productModel = productOpt.get();
         BeanUtils.copyProperties(dto, productModel);
+        if (dto.expiration() != null && dto.expiration().isBlank()) {
+            productModel.setExpiration(null);
+        }
         return repository.save(productModel);
     }
 
@@ -65,11 +71,15 @@ public class ProductService {
     }
 
     public void validateDate(String date) {
-        if (!date.matches("^(?:(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}|null)?$")
-                || !isValidDate(date)) {
+        if (date == null || date.isBlank()) {
+            return;
+        }
+
+        if (!date.matches("^(?:(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4})$") || !isValidDate(date)) {
             throw new InvalidDateException();
         }
     }
+
 
     public void validateAddress(String address) {
         if (!address.matches("^(?:(?:[1-9]|1\\d|20)[AB]-R[1-7]|PAR-\\d+)$")) {

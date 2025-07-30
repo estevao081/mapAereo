@@ -19,6 +19,7 @@ public class ProductModel implements Serializable {
     private Integer code;
     private String name;
     private Integer quantity;
+    @Column(nullable = true)
     private String expiration;
     private String address;
 

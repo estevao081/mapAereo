@@ -23,12 +23,6 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping
-    @Operation(
-            summary = "Get all products",
-            description = "Return a list of all products"
-    )
-    @ApiResponse(responseCode = "200", description = "Products found")
-    @ApiResponse(responseCode = "204", description = "No content")
     public ResponseEntity<List<ProductModel>> getAllProducts() {
         List<ProductModel> products = service.getAllProducts();
         if (products.isEmpty()) {
@@ -38,11 +32,6 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    @Operation(
-            summary = "Get one product",
-            description = "Return a product registered in the database searching by ID"
-    )
-    @ApiResponse(responseCode = "200", description = "Product found")
     public ResponseEntity<ProductModel> getOneProduct(@PathVariable UUID id) {
         return service.findById(id)
                 .map(ResponseEntity::ok)
@@ -50,38 +39,21 @@ public class ProductController {
     }
 
     @PostMapping
-    @Operation(
-            summary = "Save product",
-            description = "Save a new product in the database"
-    )
-    @ApiResponse(responseCode = "201", description = "Created")
     public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDto dto) {
         ProductModel created = service.createProduct(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(
-            summary = "Delete product",
-            description = "Deletes the product specified by ID"
-    )
-    @ApiResponse(responseCode = "200", description = "Deleted successfully")
-    @ApiResponse(responseCode = "404", description = "Not found")
     public ResponseEntity<String> deleteProduct(@PathVariable(value = "id") UUID id) {
         if(service.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         service.deleteProduct(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("/{id}")
-    @Operation(
-            summary = "Update product",
-            description = "Updates the product specified by ID"
-    )
-    @ApiResponse(responseCode = "200", description = "Updated")
-    @ApiResponse(responseCode = "404", description = "Not found")
     public ResponseEntity<ProductModel> updateProduct(@PathVariable(value = "id") UUID id,
                                                       @RequestBody @Valid ProductRecordDto dto) {
         if(service.findById(id).isEmpty()) {

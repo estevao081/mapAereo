@@ -64,11 +64,12 @@ public class ProductController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<ProductModel> getProductByName(@PathVariable String name) {
+    public ResponseEntity<List<ProductModel>> getProductByName(@PathVariable String name) {
         List<ProductModel> products = service.findByName(name);
         if (products.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok((ProductModel) products);
+        return ResponseEntity.ok(products);
     }
+
 }

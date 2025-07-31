@@ -32,6 +32,10 @@ public class ProductService {
         return repository.findById(id);
     }
 
+    public List<ProductModel> findByName(String name) {
+        return repository.findByName(name);
+    }
+
     public ProductModel createProduct(ProductRecordDto dto) {
         validate(dto);
         ProductModel productModel = new ProductModel();

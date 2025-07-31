@@ -62,4 +62,13 @@ public class ProductController {
         ProductModel updated = service.updateProduct(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<ProductModel> getProductByName(@PathVariable String name) {
+        List<ProductModel> products = service.findByName(name);
+        if (products.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok((ProductModel) products);
+    }
 }

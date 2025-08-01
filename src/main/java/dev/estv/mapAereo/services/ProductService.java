@@ -33,7 +33,14 @@ public class ProductService {
     }
 
     public List<ProductModel> findByName(String name) {
-        return repository.findByName(name);
+        List<ProductModel> products = getAllProducts();
+        List<ProductModel> productsFound = null;
+        for (ProductModel product: products) {
+            if(product.getName().contains(name)) {
+                productsFound.add(product);
+            }
+        }
+        return productsFound;
     }
 
     public ProductModel createProduct(ProductRecordDto dto) {

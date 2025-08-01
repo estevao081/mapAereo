@@ -64,13 +64,14 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ProductModel>> getProductByName(@RequestParam String name) {
-        List<ProductModel> products = service.findByName(name);
-        if (products.isEmpty()) {
+    public ResponseEntity<List<ProductModel>> searchByName(@RequestParam String name) {
+        List<ProductModel> found = service.findByName(name);
+        if (found.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(found);
     }
+
 
 
 }

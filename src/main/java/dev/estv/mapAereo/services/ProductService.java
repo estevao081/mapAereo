@@ -13,10 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -33,15 +31,11 @@ public class ProductService {
     }
 
     public List<ProductModel> findByName(String name) {
-        List<ProductModel> products = getAllProducts();
-        List<ProductModel> productsFound = null;
-        for (ProductModel product: products) {
-            if(product.getName().contains(name)) {
-                productsFound.add(product);
-            }
-        }
-        return productsFound;
+        return getAllProducts().stream()
+                .filter(p -> p.getName().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toList());
     }
+
 
     public ProductModel createProduct(ProductRecordDto dto) {
         validate(dto);

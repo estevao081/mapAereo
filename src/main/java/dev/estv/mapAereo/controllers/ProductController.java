@@ -63,7 +63,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/searchByName")
     public ResponseEntity<List<ProductModel>> searchByName(@RequestParam String name) {
         List<ProductModel> found = service.findByName(name);
         if (found.isEmpty()) {
@@ -72,6 +72,31 @@ public class ProductController {
         return ResponseEntity.ok(found);
     }
 
+    @GetMapping("/searchByCode")
+    public ResponseEntity<List<ProductModel>> searchByCode(@RequestParam Integer code) {
+        List<ProductModel> found = service.findByCode(code);
+        if (found.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(found);
+    }
 
+    @GetMapping("/searchByExpiration")
+    public ResponseEntity<List<ProductModel>> searchByExpiration(@RequestParam String expiration) {
+        List<ProductModel> found = service.findByExpiration(expiration);
+        if (found.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(found);
+    }
+
+    @GetMapping("/searchByAddress")
+    public ResponseEntity<List<ProductModel>> searchByAddress(@RequestParam String address) {
+        List<ProductModel> found = service.findByAddress(address);
+        if (found.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(found);
+    }
 
 }

@@ -36,6 +36,23 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public List<ProductModel> findByCode(Integer code) {
+        return getAllProducts().stream()
+                .filter(p -> p.getCode().equals(code))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductModel> findByExpiration(String expiration) {
+        return getAllProducts().stream()
+                .filter(p -> p.getExpiration().contains(expiration))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductModel> findByAddress(String address) {
+        return getAllProducts().stream()
+                .filter(p -> p.getAddress().toLowerCase().contains(address.toLowerCase()))
+                .collect(Collectors.toList());
+    }
 
     public ProductModel createProduct(ProductRecordDto dto) {
         validate(dto);

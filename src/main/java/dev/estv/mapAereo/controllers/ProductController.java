@@ -73,7 +73,7 @@ public class ProductController {
     }
 
     @GetMapping("/searchByCode")
-    public ResponseEntity<List<ProductModel>> searchByCode(@RequestParam Integer code) {
+    public ResponseEntity<List<ProductModel>> searchByCode(@RequestParam String code) {
         List<ProductModel> found = service.findByCode(code);
         if (found.isEmpty()) {
             return ResponseEntity.noContent().build();

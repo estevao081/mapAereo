@@ -36,10 +36,15 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductModel> findByCode(Integer code) {
-        return getAllProducts().stream()
-                .filter(p -> p.getCode().equals(code))
-                .collect(Collectors.toList());
+    public List<ProductModel> findByCode(String code) {
+        List<ProductModel> products = getAllProducts();
+        List<ProductModel> found = new ArrayList<>();
+        for (ProductModel product : products) {
+            if(product.getCode().toString().equals(code)) {
+                found.add(product);
+            }
+        }
+        return found;
     }
 
     public List<ProductModel> findByExpiration(String expiration) {
